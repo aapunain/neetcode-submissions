@@ -1,0 +1,37 @@
+/**
+ * Definition for a binary tree node.
+ * class TreeNode(var `val`: Int) {
+ *     var left: TreeNode? = null
+ *     var right: TreeNode? = null
+ * }
+ */
+
+class Solution {
+    fun zigzagLevelOrder(root: TreeNode?): List<List<Int>> {
+        root ?: return emptyList()
+        val res = mutableListOf<List<Int>>()
+        val dq = ArrayDeque<TreeNode>()
+        dq.addLast(root)
+
+        while(dq.isNotEmpty()) {
+            val r = mutableListOf<Int>()
+
+            var size = dq.size
+
+            for(i in 1..size) {
+                val node = dq.removeFirst()
+                r.add(node.`val`)
+                node.left?.let {dq.add(it)}
+                node.right?.let {dq.add(it)}
+            }
+
+            if(res.size %2 == 1) {
+                r.reverse()
+            }
+            res.add(r)
+
+        }
+
+        return res
+    }
+}
